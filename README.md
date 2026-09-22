@@ -72,6 +72,20 @@ Contoh run lokal (10 akun, 8 worker):
 | `-out` | `accounts.json` | Output JSON |
 | `-keys` | `apikey.txt` | Output API key |
 | `-keyname` | `1111` | Nama API key di console |
+| `-nexkey` | env `NEX_PROXY_KEY` | API key [nextproxy.site](https://console.nextproxy.site) — proxy random per request |
+
+### nextproxy.site (opsional)
+
+Kalau punya key nextproxy, proxy diambil otomatis tiap request (500 req/menit). File `proxies.txt` dipakai sebagai fallback kalau API error.
+
+```bash
+# via flag
+.\typesafe-create.exe -n 10 -c 8 -nexkey nex_live_xxx
+
+# via env (gak ketulis di history shell)
+set NEX_PROXY_KEY=nex_live_xxx
+.\typesafe-create.exe -n 10 -c 8
+```
 
 ### 3. Ambil hasil
 
