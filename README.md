@@ -1,8 +1,21 @@
-# typesafe-create
+<p align="center">
+  <img src="assets/logo.png" alt="typesafe-create logo" width="420" />
+</p>
 
-Auto-register akun [typesafe.ai](https://typesafe.ai) + auto-bikin API key. Ditulis dalam Go — ringan, cepat, tanpa dependency eksternal.
+<h1 align="center">typesafe-create</h1>
 
-Email sementara dari [mail.tm](https://mail.tm) (gratis, no API key).
+<p align="center">
+  Auto-register akun <a href="https://typesafe.ai">typesafe.ai</a> + auto-bikin API key.<br/>
+  Ditulis dalam Go — ringan, cepat, tanpa dependency eksternal.
+</p>
+
+<p align="center">
+  <img src="https://img.shields.io/badge/Go-1.22+-00ADD8?style=flat-square&logo=go&logoColor=white" alt="Go" />
+  <img src="https://img.shields.io/badge/mail.tm-free%20API-7c3aed?style=flat-square" alt="mail.tm" />
+  <img src="https://img.shields.io/badge/license-Apache%202.0-blue?style=flat-square" alt="License" />
+</p>
+
+<p align="center">Email sementara dari <a href="https://mail.tm">mail.tm</a> (gratis, no API key).</p>
 
 ---
 
@@ -81,6 +94,10 @@ Semua di `main.go`:
 ---
 
 ## Alur Kerja
+
+<p align="center">
+  <img src="assets/flow.png" alt="Alur kerja: mail.tm → typesafe.ai → API keys → accounts.json + apikey.txt" width="720" />
+</p>
 
 ```
 mail.tm                    typesafe.ai
