@@ -1,0 +1,4 @@
+# Isi proxy lo sendiri, satu per baris.
+# Format: http://user:pass@host:port
+# Klaim proxy: https://dashboard.proxyscrape.com/
+# Kalau kosong, koneksi langsung (rate limit mail.tm 8 QPS/IP).

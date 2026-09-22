@@ -1,0 +1,21 @@
+# Build
+typesafe-create.exe
+*.exe
+*.out
+
+# Output
+accounts.json
+apikey.txt
+accounts.json.tmp
+*.pending.jsonl
+
+# Python
+__pycache__/
+*.pyc
+
+# Editor / OS
+.idea/
+.vscode/
+*.swp
+Thumbs.db
+.DS_Store
