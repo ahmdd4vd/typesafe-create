@@ -39,24 +39,23 @@ type record map[string]any
 
 func registerOne(slot int, proxies *ProxyPool) record {
 	proxy := proxies.Acquire()
+	defer proxies.Release(proxy)
 
 	sClient, err := newHTTPClient(proxy)
 	if err != nil {
 		return record{"status": "failed", "slot": slot, "error": err.Error()}
 	}
-	mailProxy := proxies.Acquire()
-	mailKey := proxyKey(mailProxy)
-	mClient, err := newHTTPClient(mailProxy)
+	mClient, err := newHTTPClient(proxy)
 	if err != nil {
 		return record{"status": "failed", "slot": slot, "error": err.Error()}
 	}
+	mailKey := proxyKey(proxy)
 
 	started := time.Now()
 	rec := record{
 		"status":        "running",
 		"slot":          slot,
 		"proxy":         proxyVia(proxy),
-		"mail_proxy":    proxyVia(mailProxy),
 		"registered_at": time.Now().UTC().Format(time.RFC3339),
 	}
 

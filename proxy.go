@@ -4,13 +4,11 @@ import (
 	"bufio"
 	"os"
 	"strings"
-	"sync"
 )
 
 type ProxyPool struct {
-	mu      sync.Mutex
 	proxies []string
-	index   int
+	tokens  chan string
 }
 
 func LoadProxies(path string) *ProxyPool {
@@ -34,6 +32,12 @@ func LoadProxies(path string) *ProxyPool {
 		}
 		p.proxies = append(p.proxies, line)
 	}
+	if len(p.proxies) > 0 {
+		p.tokens = make(chan string, len(p.proxies))
+		for _, px := range p.proxies {
+			p.tokens <- px
+		}
+	}
 	return p
 }
 
@@ -41,15 +45,23 @@ func (p *ProxyPool) Len() int {
 	return len(p.proxies)
 }
 
+// Acquire blocks sampai ada proxy bebas (1 koneksi per proxy).
+// Return "" kalau mode direct (tanpa proxy).
 func (p *ProxyPool) Acquire() string {
-	p.mu.Lock()
-	defer p.mu.Unlock()
-	if len(p.proxies) == 0 {
+	if p.tokens == nil {
 		return ""
 	}
-	proxy := p.proxies[p.index%len(p.proxies)]
-	p.index++
-	return proxy
+	return <-p.tokens
+}
+
+func (p *ProxyPool) Release(proxy string) {
+	if proxy == "" || p.tokens == nil {
+		return
+	}
+	select {
+	case p.tokens <- proxy:
+	default:
+	}
 }
 
 func proxyKey(proxy string) string {

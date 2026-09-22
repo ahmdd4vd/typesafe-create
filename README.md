@@ -38,6 +38,8 @@ http://USER:PASS@HOST:PORT
 
 Baris diawali `#` akan diabaikan.
 
+**1 koneksi per proxy** — worker lebih banyak dari jumlah proxy akan otomatis nunggu, jadi gak kena limit `Not Enough Connections`.
+
 > **Klaim proxy gratis di sini:**
 > **https://dashboard.proxyscrape.com/**
 
