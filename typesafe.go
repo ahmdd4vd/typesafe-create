@@ -2,10 +2,12 @@ package main
 
 import (
 	"bytes"
+	"crypto/tls"
 	"encoding/json"
 	"fmt"
 	"html"
 	"io"
+	"net"
 	"net/http"
 	"net/http/cookiejar"
 	"net/url"
@@ -13,8 +15,6 @@ import (
 	"strings"
 	"sync"
 	"time"
-
-	"crypto/tls"
 )
 
 const (
@@ -48,7 +48,14 @@ func newHTTPClient(proxy string) (*http.Client, error) {
 	transport := &http.Transport{
 		MaxIdleConns:        1024,
 		MaxIdleConnsPerHost: 64,
-		IdleConnTimeout:     90 * time.Second,
+		IdleConnTimeout:     30 * time.Second,
+		DialContext: (&net.Dialer{
+			Timeout:   6 * time.Second, // proxy mati → fail cepat
+			KeepAlive: 15 * time.Second,
+		}).DialContext,
+		TLSHandshakeTimeout:   6 * time.Second,
+		ResponseHeaderTimeout: 12 * time.Second,
+		ExpectContinueTimeout: 1 * time.Second,
 		TLSClientConfig: &tls.Config{
 			MinVersion:         tls.VersionTLS12,
 			CurvePreferences:   []tls.CurveID{tls.X25519, tls.CurveP256},

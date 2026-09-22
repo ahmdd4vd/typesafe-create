@@ -11,7 +11,6 @@ type ProxyPool struct {
 	mu      sync.Mutex
 	proxies []string
 	index   int
-	next    *nextProxyClient
 }
 
 func LoadProxies(path string) *ProxyPool {
@@ -38,28 +37,11 @@ func LoadProxies(path string) *ProxyPool {
 	return p
 }
 
-func (p *ProxyPool) UseNextProxy(apiKey string) {
-	if apiKey == "" {
-		return
-	}
-	p.next = newNextProxyClient(apiKey)
-}
-
 func (p *ProxyPool) Len() int {
 	return len(p.proxies)
 }
 
-func (p *ProxyPool) HasNext() bool {
-	return p.next != nil
-}
-
 func (p *ProxyPool) Acquire() string {
-	if p.next != nil {
-		if proxy, err := p.next.Fetch(); err == nil {
-			return proxy
-		}
-	}
-
 	p.mu.Lock()
 	defer p.mu.Unlock()
 	if len(p.proxies) == 0 {

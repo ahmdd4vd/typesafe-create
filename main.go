@@ -28,7 +28,6 @@ var (
 	outputJSONPath    string
 	outputAPIKeyPath  string
 	apiKeyName        string
-	nextProxyKey      string
 )
 
 func logf(format string, args ...any) {
@@ -150,7 +149,6 @@ func round2(v float64) float64 {
 
 func main() {
 	log.SetFlags(0)
-	loadEnv(".env")
 
 	flag.IntVar(&accountCount, "n", defaultAccountCount, "jumlah akun")
 	flag.IntVar(&concurrency, "c", defaultConcurrency, "worker paralel")
@@ -159,7 +157,6 @@ func main() {
 	flag.StringVar(&outputJSONPath, "out", defaultOutputJSON, "output JSON")
 	flag.StringVar(&outputAPIKeyPath, "keys", defaultOutputAPIKey, "output API key")
 	flag.StringVar(&apiKeyName, "keyname", "1111", "nama API key di console")
-	flag.StringVar(&nextProxyKey, "nexkey", os.Getenv("NEX_PROXY_KEY"), "API key nextproxy.site (env NEX_PROXY_KEY)")
 	flag.Parse()
 
 	if accountCount < 1 {
@@ -173,15 +170,10 @@ func main() {
 	}
 
 	proxies := LoadProxies(proxiesPath)
-	proxies.UseNextProxy(nextProxyKey)
 
-	src := "file"
-	if proxies.HasNext() {
-		src = "nextproxy"
-	} else if proxies.Len() > 0 {
+	src := "direct"
+	if proxies.Len() > 0 {
 		src = fmt.Sprintf("file (%d)", proxies.Len())
-	} else {
-		src = "direct"
 	}
 
 	logf("Mulai registrasi %d akun (konkurensi %d, proxy %s, mail.tm %.0f QPS/IP) -> %s + %s",
