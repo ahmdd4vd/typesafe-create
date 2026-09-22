@@ -9,6 +9,9 @@ apikey.txt
 accounts.json.tmp
 *.pending.jsonl
 
+# Secrets — jangan di-push
+proxies.txt
+
 # Python
 __pycache__/
 *.pyc
