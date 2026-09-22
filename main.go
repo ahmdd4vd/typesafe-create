@@ -150,6 +150,7 @@ func round2(v float64) float64 {
 
 func main() {
 	log.SetFlags(0)
+	loadEnv(".env")
 
 	flag.IntVar(&accountCount, "n", defaultAccountCount, "jumlah akun")
 	flag.IntVar(&concurrency, "c", defaultConcurrency, "worker paralel")

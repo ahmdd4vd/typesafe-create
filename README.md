@@ -87,6 +87,20 @@ set NEX_PROXY_KEY=nex_live_xxx
 .\typesafe-create.exe -n 10 -c 8
 ```
 
+### .env (opsional)
+
+Taruh key di `.env` (sudah di-gitignore):
+
+```
+NEX_PROXY_KEY=nex_live_xxx
+```
+
+Auto ke-load tiap run — tinggal:
+
+```bash
+.\typesafe-create.exe -n 10 -c 8
+```
+
 ### 3. Ambil hasil
 
 Dua file muncul setelah selesai:

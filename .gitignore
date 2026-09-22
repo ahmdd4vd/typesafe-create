@@ -11,6 +11,8 @@ accounts.json.tmp
 
 # Secrets — jangan di-push
 proxies.txt
+.env
+.env.*
 
 # Python
 __pycache__/
