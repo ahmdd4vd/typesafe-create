@@ -116,7 +116,7 @@ Itu cuma warning, bukan error. Script tetap jalan.
 
 ## Lisensi
 
-Apache-2.0 — lihat [LICENSE](../LICENSE).
+Apache-2.0 — lihat [LICENSE](LICENSE).
 
 Attribution: pakai API [mail.tm](https://mail.tm) — tolong link balik ke mereka.
 
