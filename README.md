@@ -55,6 +55,24 @@ go build -o typesafe-create.exe .
 ./typesafe-create.exe
 ```
 
+Contoh run lokal (10 akun, 8 worker):
+
+```bash
+./typesafe-create.exe -n 10 -c 8
+```
+
+### Flag
+
+| Flag | Default | Fungsi |
+|------|---------|--------|
+| `-n` | `612` | Jumlah akun |
+| `-c` | `128` | Worker paralel |
+| `-r` | `2` | Retry per akun |
+| `-proxies` | `proxies.txt` | File proxy |
+| `-out` | `accounts.json` | Output JSON |
+| `-keys` | `apikey.txt` | Output API key |
+| `-keyname` | `1111` | Nama API key di console |
+
 ### 3. Ambil hasil
 
 Dua file muncul setelah selesai:
@@ -81,15 +99,9 @@ Default: 128 worker paralel, 7 QPS per IP proxy.
 
 ## Konfigurasi
 
-Semua di `main.go`:
+Lewat flag CLI (lihat [Flag](#flag)). Default ada di `main.go`.
 
-| Konstanta | Default | Fungsi |
-|-----------|---------|--------|
-| `accountCount` | 612 | Jumlah akun yang mau dibuat |
-| `concurrency` | 128 | Worker paralel |
-| `apiKeyName` | `1111` | Nama API key di console |
-| `maxRetriesPerAcct` | 2 | Retry kalau gagal |
-| `mailPollMaxWait` | 20s | Timeout nunggu email masuk |
+Timeout nunggu email masuk: `mailPollMaxWait = 20s`.
 
 ---
 

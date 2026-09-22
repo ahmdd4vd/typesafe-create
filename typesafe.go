@@ -20,7 +20,6 @@ import (
 const (
 	consoleBaseURL      = "https://console.typesafe.ai"
 	consoleDeploymentID = "cc6f6dca06537cc04123caaaf50ca5a76d506a92"
-	apiKeyName          = "1111"
 	userAgent           = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/147.0.0.0 Safari/537.36 Edg/147.0.0.0"
 	loginPageURL        = consoleBaseURL + "/login"
 )

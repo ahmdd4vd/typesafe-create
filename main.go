@@ -1,6 +1,7 @@
 package main
 
 import (
+	"flag"
 	"fmt"
 	"log"
 	"os"
@@ -9,15 +10,24 @@ import (
 )
 
 const (
-	accountCount      = 612
-	concurrency       = 128
-	maxRetriesPerAcct = 2
-	mailPollInterval  = 250 * time.Millisecond
-	mailPollMaxWait   = 20 * time.Second
-	requestTimeout    = 30 * time.Second
-	proxiesPath       = "proxies.txt"
-	outputJSONPath    = "accounts.json"
-	outputAPIKeyPath  = "apikey.txt"
+	defaultAccountCount = 612
+	defaultConcurrency  = 128
+	mailPollInterval    = 250 * time.Millisecond
+	mailPollMaxWait     = 20 * time.Second
+	requestTimeout      = 30 * time.Second
+	defaultProxiesPath  = "proxies.txt"
+	defaultOutputJSON   = "accounts.json"
+	defaultOutputAPIKey = "apikey.txt"
+)
+
+var (
+	accountCount      int
+	concurrency       int
+	maxRetriesPerAcct int
+	proxiesPath       string
+	outputJSONPath    string
+	outputAPIKeyPath  string
+	apiKeyName        string
 )
 
 func logf(format string, args ...any) {
@@ -139,6 +149,26 @@ func round2(v float64) float64 {
 
 func main() {
 	log.SetFlags(0)
+
+	flag.IntVar(&accountCount, "n", defaultAccountCount, "jumlah akun")
+	flag.IntVar(&concurrency, "c", defaultConcurrency, "worker paralel")
+	flag.IntVar(&maxRetriesPerAcct, "r", 2, "retry per akun")
+	flag.StringVar(&proxiesPath, "proxies", defaultProxiesPath, "file proxy")
+	flag.StringVar(&outputJSONPath, "out", defaultOutputJSON, "output JSON")
+	flag.StringVar(&outputAPIKeyPath, "keys", defaultOutputAPIKey, "output API key")
+	flag.StringVar(&apiKeyName, "keyname", "1111", "nama API key di console")
+	flag.Parse()
+
+	if accountCount < 1 {
+		accountCount = 1
+	}
+	if concurrency < 1 {
+		concurrency = 1
+	}
+	if maxRetriesPerAcct < 0 {
+		maxRetriesPerAcct = 0
+	}
+
 	proxies := LoadProxies(proxiesPath)
 
 	logf("Mulai registrasi %d akun (konkurensi %d, proxy %d, mail.tm %.0f QPS/IP) -> %s + %s",
