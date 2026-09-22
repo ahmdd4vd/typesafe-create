@@ -99,25 +99,6 @@ Semua di `main.go`:
   <img src="assets/flow.png" alt="Alur kerja: mail.tm → typesafe.ai → API keys → accounts.json + apikey.txt" width="720" />
 </p>
 
-```
-mail.tm                    typesafe.ai
-   │                            │
-   │  1. buat email random      │
-   │───────────────────────────▶│  2. kirim magic link
-   │                            │
-   │  3. ambil isi email        │
-   │◀───────────────────────────│
-   │                            │
-   │         4. login pakai token
-   │◀──────────────────────────▶│
-   │                            │
-   │         5. bikin API key
-   │◀──────────────────────────▶│
-   │                            │
-   ▼                            ▼
-accounts.json + apikey.txt
-```
-
 ---
 
 ## Masalah Umum
